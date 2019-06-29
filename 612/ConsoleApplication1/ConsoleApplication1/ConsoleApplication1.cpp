@@ -28,7 +28,8 @@ namespace test1
 #include "list"
 namespace test2
 {
-	std::vector<int> vec(4, 4);
+	std::vector<int> vec{12,4,43,5,436,345};
+	std::vector<int> vec2(vec);
 	std::list<char> lit1{ 'a','b','c','d','e' };
 	std::list<char> lit2{ 'b','c','d','e','f' };
 	std::list<int> lit3{ 13,42,54,12,56 };
@@ -89,7 +90,14 @@ namespace test4
 int main()
 {
 	std::cout << "Test2-----------------------------------------------------\n";
-	for_each(test2::vec.begin(), test2::vec.end(), [](int n) { std::cout << "for_each :n : " << n <<std::endl; });//学习for_each
+	std::cout << "原Vector" << std::endl;
+	for_each(test2::vec.begin(), test2::vec.end(), [](int n) { std::cout << n <<std::endl; });//学习for_each
+	std::cout << "Vector进行降序排列" << std::endl;
+	sort(test2::vec.begin(), test2::vec.end(), std::greater<int>());
+	for_each(test2::vec.begin(), test2::vec.end(), [](int n) { std::cout << n << std::endl ; });//学习for_each
+	std::cout << "Vector进行升序排列" << std::endl;
+	sort(test2::vec.begin(), test2::vec.end()); //sort 第三个为适配器 默认为升序
+	for_each(test2::vec.begin(), test2::vec.end(), [](int n) { std::cout  << n  << std::endl; });//学习for_each
 	//for_each(test2::vec.begin(), test2::vec.end(), &test2::output);
 	copy(test2::lit3.begin(), test2::lit3.end(), std::ostream_iterator<int>(std::cout," "));//学习copy输出
 	std::cout << std::endl << std::endl;
