@@ -68,6 +68,33 @@ namespace test4
 	std::map<Enum, int (*)(int&,int&)> maptest2;
 	std::map<Enum, int(*)(int&, int&)>::iterator itrmap;
 }
+namespace test5
+{
+	template<class T>
+	class My_ptr
+	{
+	public:
+		My_ptr(T *p) :_ptr(p) //C++类变量赋值新方法 在构造函数中使用":"可以对变量进行赋值。
+		{
+			std::cout << "生时获得资源" << std::endl;
+		}
+		T& operator *()
+		{
+			return *_ptr;
+		}
+		T* operator -> ()
+		{
+			return _ptr;
+		}
+		~My_ptr()
+		{
+			std::cout << "死前释放资源" << std::endl;
+			//delete _ptr; //delete会发生错误。 似乎是会触发二次释放内存，表示编译器已经释放一次内存了。
+		}
+	private:
+		T *_ptr;
+	};
+}
 int main()
 {	
 	std::cout << "Test2-----------------------------------------------------\n";
@@ -102,7 +129,15 @@ int main()
 	test4::maptest2.insert(std::pair<Enum, int(*)(int&, int&)>(ThirdNum, Third));
 	test4::itrmap = test4::maptest2.find(FirstNum);
 	std::cout << test4::itrmap->second(test4::StrFun.a, test4::StrFun.b) << std::endl;
-	
+	std::cout << "Test5-----------------------------------------------------\n";
+	[](int x) {std::cout << "仿函数学习：" << x << std::endl; }(10); //学习仿函数
+	[](int x) ->int {std::cout << "仿函数学习："; std::cout << x << std::endl; return x; }(10);//仿函数返回值
+	int a = 100;
+	{
+		test5::My_ptr<int> p = &a; //My_ptr<int>相当于int智能指针
+		std::cout << *p << std::endl;
+	}
+	std::cout << std::endl;
 	
 
 	return 0;		
