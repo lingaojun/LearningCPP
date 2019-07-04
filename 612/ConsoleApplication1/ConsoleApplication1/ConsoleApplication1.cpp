@@ -95,6 +95,14 @@ namespace test5
 		T *_ptr;
 	};
 }
+
+namespace test6
+{
+	auto fun = [](int i)
+	{
+		std::cout << "lambda test :" << i << std::endl;
+	};
+}
 int main()
 {	
 	std::cout << "Test2-----------------------------------------------------\n";
@@ -132,12 +140,14 @@ int main()
 	std::cout << "Test5-----------------------------------------------------\n";
 	[](int x) {std::cout << "仿函数学习：" << x << std::endl; }(10); //学习仿函数
 	[](int x) ->int {std::cout << "仿函数学习："; std::cout << x << std::endl; return x; }(10);//仿函数返回值
+	system("echo system test");
 	int a = 100;
 	{
 		test5::My_ptr<int> p = &a; //My_ptr<int>相当于int智能指针
 		std::cout << *p << std::endl;
 	}
-	std::cout << std::endl;
+	std::cout << "Test6-----------------------------------------------------\n";
+	test6::fun(1);
 	
 
 	return 0;		
