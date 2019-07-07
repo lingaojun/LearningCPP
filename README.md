@@ -9,5 +9,5 @@ For：To Learn C++ ，not well for LV0，but Im OG,
 增加system函数使用和一种lambda表达式
 
 # 7.07
-增加类的初始化列的相关知识
+增加类的初始化列的相关知识  
 增加线程以及promise/future用于跟踪线程内变量的相关知识
