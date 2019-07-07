@@ -1,6 +1,5 @@
 ﻿// ConsoleApplication1.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
-
 #include "pch.h"
 #include <iostream>
 #include "iterator"
@@ -130,6 +129,22 @@ namespace test7
 		std::cout << "member initializer and success!" << std::endl;
 	}
 }
+#include "thread"
+#include "future"
+namespace test8
+{
+	int num = 0;
+	std::promise<int> promiseObj;
+	std::future<int> futureObj = promiseObj.get_future();
+	void fun(std::promise<int> *a,int *num) 
+	{
+		std::cout << "thread1 start!" << std::endl;
+		a->set_value(10);
+		(*num)++;
+		std::cout << "thread1 over!" << std::endl;	
+	}
+
+}
 int main()
 {	
 	std::cout << "Test2-----------------------------------------------------\n";
@@ -177,8 +192,11 @@ int main()
 	test6::fun(1);
 	std::cout << "Test7-----------------------------------------------------\n";
 	test7::Test1 test1;
-	
-
+	std::cout << "Test8-----------------------------------------------------\n";
+	std::thread thread1(test8::fun, &test8::promiseObj,&test8::num);
+	thread1.join();
+	std::cout << test8::futureObj.get() << std::endl;
+	std::cout << test8::num << std::endl;
 	return 0;		
 }
 
