@@ -103,6 +103,33 @@ namespace test6
 		std::cout << "lambda test :" << i << std::endl;
 	};
 }
+#include "memory"
+namespace test7
+{
+	//std::unique_ptr<int> ptr = std::make_unique<int>;
+	class Test2
+	{
+	public:
+		Test2();
+
+	};
+	class Test1
+	{
+	public:
+		Test1();
+
+		Test2 test2;
+	};
+
+	Test1::Test1()
+		: test2()
+	{
+	}
+	Test2::Test2()
+	{
+		std::cout << "member initializer and success!" << std::endl;
+	}
+}
 int main()
 {	
 	std::cout << "Test2-----------------------------------------------------\n";
@@ -148,6 +175,8 @@ int main()
 	}
 	std::cout << "Test6-----------------------------------------------------\n";
 	test6::fun(1);
+	std::cout << "Test7-----------------------------------------------------\n";
+	test7::Test1 test1;
 	
 
 	return 0;		
