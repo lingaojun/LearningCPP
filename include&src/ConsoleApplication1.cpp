@@ -145,12 +145,16 @@ namespace test8
 	}
 
 }
-int main()
+int main(int argc ,char **argv)
 {	
 	std::cout << "Test2-----------------------------------------------------\n";
 	for_each(test2::vec.begin(), test2::vec.end(), [](int n) { std::cout << "for_each :n : " << n <<std::endl; });//按顺序输出vector中的内容
 	//for_each(test2::vec.begin(), test2::vec.end(), &test2::output);
 	copy(test2::lit3.begin(), test2::lit3.end(), std::ostream_iterator<int>(std::cout," "));//将list的内容按顺序以此复制到输出流中，相当于输出内容。
+	for (std::list<int>::iterator itr = test2::lit3.begin(); itr != test2::lit3.end(); itr++)
+	{
+		std::cout << *itr << std::endl;
+	}
 	std::cout << std::endl << std::endl;//测试std::endl代表回车功能。
 	test2::lit3.sort();//测试list的排序功能，因为list内部为链表结构，地址顺序不连续，导致不能使用常规排序方式进行排序。
 	for_each(test2::lit3.begin(), test2::lit3.end(), [](int n) {std::cout << n << " "; });//同上
@@ -197,6 +201,20 @@ int main()
 	thread1.join();
 	std::cout << test8::futureObj.get() << std::endl;
 	std::cout << test8::num << std::endl;
+	std::cout << "Test8-----------------------------------------------------\n";
+	std::cout << "argc is " << argc << std::endl;
+	for (int i = 1; i < argc; i++)
+	{
+		std::cout << **(argv+i) << std::endl;;
+	}
+	
+	for (int i = 1; i < argc; i++)
+	{
+		std::cout << argv[i] << std::endl;;
+	}
+	std::cout << (argv + 1) << std::endl;
+	//copy((argv+1), (argv+3), std::ostream_iterator<int>(std::cout, " "));
+	//std::cout << "argv is " << *argv[1] << std::endl;
 	return 0;		
 }
 
