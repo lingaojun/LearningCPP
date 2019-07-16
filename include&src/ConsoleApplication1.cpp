@@ -145,6 +145,11 @@ namespace test8
 	}
 
 }
+namespace test9
+{
+	std::vector<int> vec(10,10);
+	std::vector<int> vec2;
+}
 int main(int argc ,char **argv)
 {	
 	std::cout << "Test2-----------------------------------------------------\n";
@@ -215,6 +220,9 @@ int main(int argc ,char **argv)
 	std::cout << (argv + 1) << std::endl;
 	//copy((argv+1), (argv+3), std::ostream_iterator<int>(std::cout, " "));
 	//std::cout << "argv is " << *argv[1] << std::endl;
+	std::cout << "Test9-----------------------------------------------------\n";
+	test9::vec2.push_back(std::move(test9::vec[0]));//move 右值赋值 相当于将变量作为常数传给新的vector
+	for_each(test9::vec2.begin(), test9::vec2.end(), [](int n) { std::cout << "for_each :n : " << n << std::endl; });
 	return 0;		
 }
 
