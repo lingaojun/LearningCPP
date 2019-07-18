@@ -151,6 +151,7 @@ namespace test9
 	std::vector<int> vec2;
 	std::vector<std::string> vec3(2, "test9");
 	std::vector<std::string> vec4;
+	double i = 3.14; //小常数量会被认为是double型，所以从float转换成int时会告警 “double到float被截断”
 }
 int main(int argc ,char **argv)
 {	
@@ -227,8 +228,11 @@ int main(int argc ,char **argv)
 	for_each(test9::vec2.begin(), test9::vec2.end(), [](int n) { std::cout << "for_each :n : " << n << std::endl; });
 	std::cout << "test9::vec[0] is " << test9::vec[0] << std::endl;
 	test9::vec4.push_back(std::move(test9::vec3[0]));//move 右值赋值 相当于将变量作为常数传给新的vector且不为拷贝 而是直接内存传递即原值变为空
+	test9::vec4.push_back(static_cast<std::string&&>(test9::vec3[1]));//static_cast<std::string&&>(test9::vec3[1]) <==> std::move(test9::vec3[0]) 返回的是右值引用，对对象本身没做任何事
 	for_each(test9::vec4.begin(), test9::vec4.end(), [](std::string n) { std::cout << "for_each :n : " << n << std::endl; });
 	std::cout <<  "test9::vec3[0] is "<< test9::vec3[0] << std::endl;
+	std::cout << "test9::vec3[1] is " << test9::vec3[1] << std::endl;
+	std::cout << "static_cast<int>test9::i is " << static_cast<int>(test9::i) << std::endl;
 	return 0;		
 }
 
