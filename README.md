@@ -24,4 +24,8 @@ For：To Learn C++ ，not well for LV0，but Im OG,
 
 # 7.18
 增加static_cast相关知识，以及小数常量一般被定义为double，若需要说明则在数字后加上F.  
-解答问题三：std::move()源码只返回输入形参的右值引用，即static_cast<std::string&&>(param).string为类,与int等有本质上的区别.在string的移动构造函数中，变量交换后则原来将指向空指针,导致变量为空,但仍有size.
+解答问题三：std::move()源码只返回输入形参的右值引用，即static_cast<std::string&&>(param).string为类,与int等有本质上的区别.在string的移动构造函数中，变量交换后则原来将指向空指针,导致变量为空,但仍有size.  
+
+# 7.28  
+增加类构造函数重载中相关注意的事项，构造函数中初始列和默认传参冲突等相关内容  
+
