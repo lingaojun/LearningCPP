@@ -153,6 +153,22 @@ namespace test9
 	std::vector<std::string> vec4;
 	double i = 3.14; //小常数量会被认为是double型，所以从float转换成int时会告警 “double到float被截断”
 }
+namespace test10 {
+	class Test
+	{
+	public:
+		Test(int x = 0, int y = 0)
+			: a(x)
+			, b(y)
+		{};	
+		Test()
+			: a(1)
+			, b(1)
+		{};
+		int a; int b;
+	};
+
+}
 int main(int argc ,char **argv)
 {	
 	std::cout << "Test2-----------------------------------------------------\n";
@@ -233,6 +249,10 @@ int main(int argc ,char **argv)
 	std::cout <<  "test9::vec3[0] is "<< test9::vec3[0] << std::endl;
 	std::cout << "test9::vec3[1] is " << test9::vec3[1] << std::endl;
 	std::cout << "static_cast<int>test9::i is " << static_cast<int>(test9::i) << std::endl;
+	std::cout << "Test10-----------------------------------------------------\n";
+    //test10::Test test10; 对是否调用哪个构造函数会产生歧义 所以不被允许
+	test10::Test test10(1,2);
+	std::cout << test10.a << std::endl;
 	return 0;		
 }
 
