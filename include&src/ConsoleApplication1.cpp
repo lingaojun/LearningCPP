@@ -169,6 +169,32 @@ namespace test10 {
 	};
 
 }
+#include "queue"
+namespace test11 {
+	std::queue<int> q;
+	std::deque<int> d;
+}
+namespace test12 {
+	const char *ch = "This is ch";
+	class A
+	{
+	public:
+		A();
+		A(std::string p, const char** Pch)
+			: a(p),
+			ch(Pch)
+			//ch((char *)a.c_str()) 不允许使用c_str传回的指针进行应用，若需要拷贝则使用strcpy
+		{}
+		std::string Ret() const { return this->a; }
+		void ChangeStr() { this->a = "Changed!"; }
+		const char** GetChPtr() { return ch; }
+		~A() {}
+	private:
+		std::string a;
+		const char **ch;
+
+	};
+}
 int main(int argc ,char **argv)
 {	
 	std::cout << "Test2-----------------------------------------------------\n";
@@ -253,6 +279,21 @@ int main(int argc ,char **argv)
     //test10::Test test10; 对是否调用哪个构造函数会产生歧义 所以不被允许
 	test10::Test test10(1,2);
 	std::cout << test10.a << std::endl;
+	std::cout << "Test11-----------------------------------------------------\n";
+	test11::q.push(1);
+	std::cout << "q'size is "<< sizeof(test11::q) << std::endl; //sizeof(q) == 40的原因是因为其类has a deque 
+	std::cout << "d' size is " << sizeof(test11::d) << std::endl; //解释 sizeof(deque) == sizeof(queue)
+	std::cout << "Test12-----------------------------------------------------\n";
+	const char **tmp = NULL;
+	{
+		test12::A clsA("hello world", &test12::ch);
+		test12::A clsB(clsA); //不允许使用浅拷贝，会导致在析构函数中会对同一地址的内存进行两次释放。
+		std::cout << &test12::ch << std::endl;
+		std::cout << clsA.GetChPtr() << std::endl;
+		//以上是实现了将某类的私有成员的地址指向已知的地址，通过二级指针的形式，进行赋值并且返回该地址。
+		tmp = &test12::ch;
+	}
+	std::cout << *tmp << std::endl; //有输出，说明存在内存泄漏的问题。
 	return 0;		
 }
 
