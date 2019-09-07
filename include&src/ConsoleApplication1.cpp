@@ -293,7 +293,7 @@ int main(int argc ,char **argv)
 		//以上是实现了将某类的私有成员的地址指向已知的地址，通过二级指针的形式，进行赋值并且返回该地址。
 		tmp = &test12::ch;
 	}
-	std::cout << *tmp << std::endl; //有输出，说明存在内存泄漏的问题。
+	std::cout << *tmp << std::endl; //有输出,并不是内存泄漏。而是因为test12::ch为全局变量，不为临时变量。
 	return 0;		
 }
 
