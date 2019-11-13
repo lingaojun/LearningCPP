@@ -1,7 +1,4 @@
-﻿// ConsoleApplication1.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
-//
-#include "pch.h"
-#include <iostream>
+﻿#include <iostream>
 #include "iterator"
 #include "vector"
 #include "algorithm"
@@ -195,6 +192,18 @@ namespace test12 {
 
 	};
 }
+#include <functional>
+namespace test13 {
+	void testfunction1(int a)
+	{
+		std::cout << "test13's a is " << a <<std::endl;
+	}
+	
+	int testfunction2(int a)
+	{
+		return a+1;
+	}
+}
 int main(int argc ,char **argv)
 {	
 	std::cout << "Test2-----------------------------------------------------\n";
@@ -294,6 +303,12 @@ int main(int argc ,char **argv)
 		tmp = &test12::ch;
 	}
 	std::cout << *tmp << std::endl; //有输出,并不是内存泄漏。而是因为test12::ch为全局变量，不为临时变量。
+	std::cout << "Test13-----------------------------------------------------\n";
+	std::function<int(int)> testFuna = test13::testfunction2;//std::function<>类似于函数指针的形式，只不过它是类，猜测通过运算符重载的方式进行指针赋值。
+	std::cout << testFuna(1) << std::endl;
+	std::function<void(int)> testFunb = test13::testfunction1;
+	testFunb(1);
+	
 	return 0;		
 }
 
