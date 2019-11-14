@@ -34,5 +34,5 @@ For：To Learn C++ ，not well for LV0，but Im OG,
 增加了对deque和queue的大小说明。
 
 # 11.14
-增加NVI(Non-Virtual-Interface)技术,通过接口与实现隔离的方式，**将具体实现的函数设置为private形式，而接口函数继续保持public**，子类通过自己去写具体实现的方式，同样设置为private，那么当实例化子类时，可以调用到子类的pritva具体实现函数。是除了使用Virtual技术的继承方式，牛逼！
+增加NVI(Non-Virtual-Interface)技术,通过接口与实现隔离的方式，**将具体实现的函数设置为private形式，而接口函数继续保持public**，子类通过自己去写具体实现的方式，同样设置为private，那么当实例化子类时，可以调用到子类的pritva具体实现函数。是除了使用Virtual技术的继承方式，牛逼!  
 增加不应重新定义继承而来的缺省参数值，因为缺省参数值是**静态绑定**的，当某基类指针实例化子类时，该参数仍旧是使用**基类**的缺省参数值。
