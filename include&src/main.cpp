@@ -56,7 +56,7 @@ namespace test3
 namespace test4
 {
 	MyStruct StrFun;
-	int (*fun[])(int &a, int &b) = 
+	int (*fun[])(int &a, int &b) =
 	{
 		First,Second,Third
 	};
@@ -133,12 +133,12 @@ namespace test8
 	int num = 0;
 	std::promise<int> promiseObj;
 	std::future<int> futureObj = promiseObj.get_future();
-	void fun(std::promise<int> *a,int *num) 
+	void fun(std::promise<int> *a,int *num)
 	{
 		std::cout << "thread1 start!" << std::endl;
 		a->set_value(10);
 		(*num)++;
-		std::cout << "thread1 over!" << std::endl;	
+		std::cout << "thread1 over!" << std::endl;
 	}
 
 }
@@ -157,7 +157,7 @@ namespace test10 {
 		Test(int x = 0, int y = 0)
 			: a(x)
 			, b(y)
-		{};	
+		{};
 		Test()
 			: a(1)
 			, b(1)
@@ -192,20 +192,41 @@ namespace test12 {
 
 	};
 }
-#include <functional>
 namespace test13 {
-	void testfunction1(int a)
-	{
-		std::cout << "test13's a is " << a <<std::endl;
-	}
-	
-	int testfunction2(int a)
-	{
-		return a+1;
-	}
+    class A
+    {
+    public:
+        int f() { f1();}
+        virtual ~A() { std::cout << "~A" << std::endl;}
+    private:
+        virtual int f1() {std::cout << "A::f1"<< std::endl;}
+    };
+
+    class B : public A
+    {
+    public:
+        ~B() {std::cout << "~B" << std::endl;}
+    private:
+        virtual int f1()  {std::cout << "B::f1" << std::endl;}
+    };
+
 }
+namespace test14 {
+    class A {
+    public:
+       enum Color {Red = 10, Blue};
+       virtual  void fun(Color color = Red) {std::cout << color << std::endl;}
+
+    };
+
+    class B : public A {
+    public:
+        virtual void fun(Color color = Blue) {std::cout << color << std::endl;}
+    };
+}
+
 int main(int argc ,char **argv)
-{	
+{
 	std::cout << "Test2-----------------------------------------------------\n";
 	for_each(test2::vec.begin(), test2::vec.end(), [](int n) { std::cout << "for_each :n : " << n <<std::endl; });//按顺序输出vector中的内容
 	//for_each(test2::vec.begin(), test2::vec.end(), &test2::output);
@@ -227,7 +248,7 @@ int main(int argc ,char **argv)
 	std::cout << test2::output << std::endl;
 	std::cout << "Test3-----------------------------------------------------\n";
 	test3::fun(1, 2, test3::Add()); //这里直接调用类的类型名字作为临时变量是允许的。
-	std::cout << "Test4-----------------------------------------------------\n"; 
+	std::cout << "Test4-----------------------------------------------------\n";
 	test4::StrFun.a = 1;
 	test4::StrFun.b = 2;
 	test4::StrFun.Fun = NULL;
@@ -266,7 +287,7 @@ int main(int argc ,char **argv)
 	{
 		std::cout << **(argv+i) << std::endl;;
 	}
-	
+
 	for (int i = 1; i < argc; i++)
 	{
 		std::cout << argv[i] << std::endl;;
@@ -290,7 +311,7 @@ int main(int argc ,char **argv)
 	std::cout << test10.a << std::endl;
 	std::cout << "Test11-----------------------------------------------------\n";
 	test11::q.push(1);
-	std::cout << "q'size is "<< sizeof(test11::q) << std::endl; //sizeof(q) == 40的原因是因为其类has a deque 
+	std::cout << "q'size is "<< sizeof(test11::q) << std::endl; //sizeof(q) == 40的原因是因为其类has a deque
 	std::cout << "d' size is " << sizeof(test11::d) << std::endl; //解释 sizeof(deque) == sizeof(queue)
 	std::cout << "Test12-----------------------------------------------------\n";
 	const char **tmp = NULL;
@@ -303,13 +324,16 @@ int main(int argc ,char **argv)
 		tmp = &test12::ch;
 	}
 	std::cout << *tmp << std::endl; //有输出,并不是内存泄漏。而是因为test12::ch为全局变量，不为临时变量。
-	std::cout << "Test13-----------------------------------------------------\n";
-	std::function<int(int)> testFuna = test13::testfunction2;//std::function<>类似于函数指针的形式，只不过它是类，猜测通过运算符重载的方式进行指针赋值。
-	std::cout << testFuna(1) << std::endl;
-	std::function<void(int)> testFunb = test13::testfunction1;
-	testFunb(1);
-	
-	return 0;		
+    std::cout << "Test13-----------------------------------------------------\n";
+    test13::A *b = new test13::B;
+    b->f(); //通过接口与实现隔离的方式，实现了接口继承的效果。笔者初见为之惊叹! (NVI::Non-Virtual-Interface)
+    delete b;
+    std::cout << "Test14-----------------------------------------------------\n";
+    test14::B* test14b = new test14::B;
+    test14b->fun();
+    test14::A* test14a = new test14::B;
+    test14a->fun();//以上告诉我们，不应重新定义继承而来的缺省参数值，因为参数为静态绑定，它只与指针类型有关。
+    return 0;
 }
 
 
