@@ -224,7 +224,22 @@ namespace test14 {
         virtual void fun(Color color = Blue) {std::cout << color << std::endl;}
     };
 }
+namespace test15 {
+    template <typename type>
+    class A {
+    public:
+        type fun() {return i;}
+        type i;
+    };
 
+    template <typename type>
+    class B : public A<type> {
+    public:
+        type fun2() {return ii;}
+        type ii;
+
+    };
+}
 int main(int argc ,char **argv)
 {
 	std::cout << "Test2-----------------------------------------------------\n";
@@ -333,6 +348,11 @@ int main(int argc ,char **argv)
     test14b->fun();
     test14::A* test14a = new test14::B;
     test14a->fun();//以上告诉我们，不应重新定义继承而来的缺省参数值，因为参数为静态绑定，它只与指针类型有关。
+    std::cout << "Test15-----------------------------------------------------\n";
+    test15::A<int> test15a;
+    std::cout << sizeof(test15a.fun()) << std::endl;
+    test15::B<long int> test15b;
+    std::cout << sizeof(test15b.fun()) << std::endl;
     return 0;
 }
 
