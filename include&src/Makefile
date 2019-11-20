@@ -3,7 +3,7 @@ OBJS :=
 TARGET := LearnCpp
 
 CC := g++
-LIBS := -std=c++14 -lpthread
+LIBS := -std=c++14 -lpthread -g
 LDFLAGS := -L.
 DEFINES :=
 INCLUDE := -I ./

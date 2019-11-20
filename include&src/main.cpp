@@ -240,6 +240,24 @@ namespace test15 {
 
     };
 }
+#include <bitset>
+namespace test16 {
+    std::bitset<20> bitset1("01011011101111011111");
+    std::bitset<6> bitset2("101"); //若不满长度则高位自动补0
+    auto ptr = &bitset1;
+
+}
+namespace test17 {
+    class A {
+    public:
+        virtual ~A() {};
+        int a = 1;
+    };
+
+    typedef std::vector<A> Avec;
+    typedef Avec::iterator ptrAvec;
+
+}
 int main(int argc ,char **argv)
 {
 	std::cout << "Test2-----------------------------------------------------\n";
@@ -353,6 +371,17 @@ int main(int argc ,char **argv)
     std::cout << sizeof(test15a.fun()) << std::endl;
     test15::B<long int> test15b;
     std::cout << sizeof(test15b.fun()) << std::endl;
+    std::cout << "Test16-----------------------------------------------------\n";
+    std::cout << test16::bitset1 << std::endl;
+    std::cout << test16::bitset2 << std::endl;
+    std::cout << sizeof(test16::bitset1) << std::endl;
+    for(int i = 0; i < 20; i++) { std::cout << test16::bitset1[i];} //由低到高按位输出
+    std::cout << std::endl;
+    std::cout << test16::ptr << std::endl;
+    std::cout << ++test16::ptr << std::endl;
+    std::cout << "Test17-----------------------------------------------------\n";
+    test17::Avec clsAVec(10);
+    std::cout << clsAVec[9].a << std::endl; //typedef
     return 0;
 }
 
