@@ -258,6 +258,27 @@ namespace test17 {
     typedef Avec::iterator ptrAvec;
 
 }
+namespace test18 {
+    class A {
+    public:
+        virtual ~A() {};
+        virtual void fun() { std::cout << "test18::A::fun()" << std::endl;}
+    };
+    class B : public A {
+    public:
+        virtual ~B() {};
+        virtual void fun() { std::cout << "test18::B::fun()" << std::endl;}
+    };
+
+    B b;
+    A a;
+    std::vector<A> Avec;
+}
+namespace test19 {
+    std::list<int> list1(5,10);
+    std::list<int> list2(5,5);
+    auto itr = list1.begin();
+}
 int main(int argc ,char **argv)
 {
 	std::cout << "Test2-----------------------------------------------------\n";
@@ -382,6 +403,17 @@ int main(int argc ,char **argv)
     std::cout << "Test17-----------------------------------------------------\n";
     test17::Avec clsAVec(10);
     std::cout << clsAVec[9].a << std::endl; //typedef
+    std::cout << "Test18-----------------------------------------------------\n";
+    test18::Avec.push_back(test18::a);
+    test18::Avec.push_back(test18::b);
+    test18::Avec[1].fun(); //仍会调用积累的接口
+    std::cout << "Test19-----------------------------------------------------\n";
+    test19::list1.splice(test19::list1.begin(), test19::list2);
+    std::cout << test19::list1.size() << std::endl;
+    std::cout << test19::list2.size() << std::endl; //splice的作用是将某个链表的内容转移到其他链表的固定位置
+	for_each(test19::list1.begin(), test19::list1.end(), [](int n) { std::cout << "for_each :n : " << n <<std::endl; });//按顺序输出list中的内容
+    std::advance(test19::itr,7);
+    std::cout << *test19::itr << std::endl;
     return 0;
 }
 
