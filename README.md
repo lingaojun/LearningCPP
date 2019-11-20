@@ -41,4 +41,6 @@ For：To Learn C++ ，not well for LV0，but Im OG,
 增加模板基类相关知识  
 
 # 11.20  
-增加bitset相关知识和typedef相关内容
+增加bitset相关知识和typedef相关内容  
+增加list中splice库函数的使用方式（从一个list中转移变量至另一个list中）  
+
