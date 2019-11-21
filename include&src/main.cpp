@@ -261,12 +261,10 @@ namespace test17 {
 namespace test18 {
     class A {
     public:
-        virtual ~A() {};
         virtual void fun() { std::cout << "test18::A::fun()" << std::endl;}
     };
     class B : public A {
     public:
-        virtual ~B() {};
         virtual void fun() { std::cout << "test18::B::fun()" << std::endl;}
     };
 
@@ -275,9 +273,26 @@ namespace test18 {
     std::vector<A> Avec;
 }
 namespace test19 {
-    std::list<int> list1(5,10);
-    std::list<int> list2(5,5);
-    auto itr = list1.begin();
+    std::list<int> list1(5,5);
+    std::list<int> list2(5,10);
+    auto itr = test19::list1.begin();
+
+}
+namespace test20 {
+    class A {
+    public:
+        ~A() { std::cout << "test20::~A" << std::endl;}
+        virtual void fun() { std::cout << "test20::A" << std::endl;}
+    };
+    class B : public A {
+    public:
+        ~B() { std::cout << "test20::~B" << std::endl;}
+        virtual void fun() { std::cout << "test20::B" << std::endl;}
+        int b;
+    };
+    typedef void (*FuncPtr)();
+    FuncPtr func[10];
+    int fun1() {return 20;}
 }
 int main(int argc ,char **argv)
 {
@@ -408,12 +423,16 @@ int main(int argc ,char **argv)
     test18::Avec.push_back(test18::b);
     test18::Avec[1].fun(); //仍会调用积累的接口
     std::cout << "Test19-----------------------------------------------------\n";
-    test19::list1.splice(test19::list1.begin(), test19::list2);
+    test19::list1.splice(test19::list1.end(), test19::list2);
     std::cout << test19::list1.size() << std::endl;
     std::cout << test19::list2.size() << std::endl; //splice的作用是将某个链表的内容转移到其他链表的固定位置
-	for_each(test19::list1.begin(), test19::list1.end(), [](int n) { std::cout << "for_each :n : " << n <<std::endl; });//按顺序输出list中的内容
-    std::advance(test19::itr,7);
+    for_each(test19::list1.begin(), test19::list1.end(), [](int n) { std::cout << "for_each :n : " << n <<std::endl; });//按顺序输出list中的内容
+    std::advance(test19::itr,4);
     std::cout << *test19::itr << std::endl;
+    std::cout << "Test20-----------------------------------------------------\n";
+    test20::func[0] = reinterpret_cast<test20::FuncPtr>(&test20::fun1);
+    std::cout << test20::func[0] << std::endl;
+    std::cout <<  "sizeof(test20::B) is " <<sizeof(test20::B) << std::endl;
     return 0;
 }
 
