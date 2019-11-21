@@ -43,5 +43,9 @@ For：To Learn C++ ，not well for LV0，but Im OG,
 # 11.20  
 增加bitset相关知识和typedef相关内容  
 增加list中splice库函数的使用方式（从一个list中转移变量至另一个list中）  
-增加advance库函数的使用(移动指针)
+增加advance库函数的使用(移动指针)  
+
+# 11.21  
+增加C++环境中函数类型强制转换方式的相关知识  
+增加类大小的计算方式等相关知识  
 
