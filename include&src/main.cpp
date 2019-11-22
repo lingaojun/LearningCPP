@@ -276,7 +276,6 @@ namespace test19 {
     std::list<int> list1(5,5);
     std::list<int> list2(5,10);
     auto itr = test19::list1.begin();
-
 }
 namespace test20 {
     class A {
@@ -293,6 +292,18 @@ namespace test20 {
     typedef void (*FuncPtr)();
     FuncPtr func[10];
     int fun1() {return 20;}
+    B* b = new B[2];
+    void clsDelete(A *a) { delete[] a;}
+}
+namespace test21 {
+    class A {
+    public:
+        A(int a) : m_a(a) {}
+        int m_a;
+    };
+    typedef A* ptrA;
+    ptrA *a = new ptrA[5]; //声明一个指针数组，成员为目标类的指针
+
 }
 int main(int argc ,char **argv)
 {
@@ -433,6 +444,10 @@ int main(int argc ,char **argv)
     test20::func[0] = reinterpret_cast<test20::FuncPtr>(&test20::fun1);
     std::cout << test20::func[0] << std::endl;
     std::cout <<  "sizeof(test20::B) is " <<sizeof(test20::B) << std::endl;
+    test20::clsDelete(test20::b); //表示尽管传入的是子类的指针，但是入参类型是基类，所以delete的仍是基类，告诉我们多态与数组不要共用。
+    std::cout << "Test21-----------------------------------------------------\n";
+    for(int i = 0; i < 5; i++) { test21::a[i] = new test21::A(i); std::cout << "test21::a[" << i << "]::a = " << test21::a[i]->m_a << std::endl;};
+    std::cout << "Test22-----------------------------------------------------\n";
     return 0;
 }
 
